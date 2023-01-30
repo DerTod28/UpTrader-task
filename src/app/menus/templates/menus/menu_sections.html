@@ -1,0 +1,16 @@
+{% load menus_extras %}
+<li>
+    <span class="caret {% if section_data.children %}children{% endif %} {% if section_data.is_opened %}caret-down{% endif %}"></span>
+    <a class="{% if section.url_slug == active_section_url_slug %}section-active{% endif %}" href="{% url 'menus:section_menu_detail' menu.url_name section.url_slug %}">
+        {{ section.verbose_name }}
+    </a>
+    {% if section_data.children %}
+        <ul class="nested {% if section_data.is_opened %}active{% endif %}">
+            {% for child in section_data.children %}
+                {% with section=child.keys|to_list|hash:0 section_data=child.values|to_list|hash:0 template_name="menus/menu_sections.html" %}
+                    {% include template_name %}
+                {% endwith %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+</li>

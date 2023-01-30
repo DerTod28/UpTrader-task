@@ -1,0 +1,24 @@
+services:
+  django:
+    build:
+      context: .
+      dockerfile: .ci/admin_panel/Dockerfile
+    depends_on:
+      - db
+    env_file:
+      - ".ci/admin_panel/deploy/docker/.env"
+    volumes:
+      - ./static:/opt/app/static
+    ports:
+      - "8000:8000"
+
+  db:
+    build:
+      context: .ci/postgres/
+      dockerfile: Dockerfile
+    ports:
+      - "5432:5432"
+    env_file:
+      - .ci/postgres/deploy/docker/.env
+    healthcheck:
+      test: pg_isready

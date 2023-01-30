@@ -1,0 +1,9 @@
+<div class="menu container">
+    <h3>{{ menu.verbose_name }}</h3>
+    <hr>
+    <ul class="menu">
+        {% for section, section_data in sections_mapping.items %}
+            {% include 'menus/menu_sections.html' %}
+        {% endfor %}
+    </ul>
+</div>
